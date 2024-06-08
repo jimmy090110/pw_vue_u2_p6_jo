@@ -1,59 +1,95 @@
 <template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
-    <p>
-      For a guide and recipes on how to configure / customize this project,<br>
-      check out the
-      <a href="https://cli.vuejs.org" target="_blank" rel="noopener">vue-cli documentation</a>.
-    </p>
-    <h3>Installed CLI Plugins</h3>
-    <ul>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-babel" target="_blank" rel="noopener">babel</a></li>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-unit-jest" target="_blank" rel="noopener">unit-jest</a></li>
-    </ul>
-    <h3>Essential Links</h3>
-    <ul>
-      <li><a href="https://vuejs.org" target="_blank" rel="noopener">Core Docs</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank" rel="noopener">Forum</a></li>
-      <li><a href="https://chat.vuejs.org" target="_blank" rel="noopener">Community Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank" rel="noopener">Twitter</a></li>
-      <li><a href="https://news.vuejs.org" target="_blank" rel="noopener">News</a></li>
-    </ul>
-    <h3>Ecosystem</h3>
-    <ul>
-      <li><a href="https://router.vuejs.org" target="_blank" rel="noopener">vue-router</a></li>
-      <li><a href="https://vuex.vuejs.org" target="_blank" rel="noopener">vuex</a></li>
-      <li><a href="https://github.com/vuejs/vue-devtools#vue-devtools" target="_blank" rel="noopener">vue-devtools</a></li>
-      <li><a href="https://vue-loader.vuejs.org" target="_blank" rel="noopener">vue-loader</a></li>
-      <li><a href="https://github.com/vuejs/awesome-vue" target="_blank" rel="noopener">awesome-vue</a></li>
-    </ul>
+  <h2>{{presentar}}</h2>
+  <!--<p>{{ numero }} <sup>2</sup>={{ calcularCuadrado() }}</p>  LLAMADA A UN METODO-->
+  <p>{{ numero }} <sup>2</sup>={{ calcular }}</p>
+  <!--LLAMADA A UNA PROPIEDAD COMPUTADA-->
+
+  <div>
+    <button v-on:click="incrementar">+1</button>
+    <button v-on:click="disminuir">-1</button>
   </div>
 </template>
- 
+
 <script>
 export default {
-  name: 'HelloWorld',
-  props: {
-    msg: String
-  }
-}
+
+ // props:["titulo","num"], Froma básica de declarar un props(Básica)
+  props:{
+    titulo: String,
+    num: {
+      type:Number,
+     // required:true // esto cuando siempre va a ser requerido
+     required: false,
+     validator(value){
+      //Toda la programación
+      //return booleano
+      return value>0;
+     }
+     
+
+    }
+    
+  },
+  data() {
+    return {
+      /*prop reactivas*/
+      numero: this.num,
+
+    };
+  },
+  methods: {
+    calcularCuadrado() {
+      console.log("Ingreso al metodo");
+      return (
+        this.numero * this.numero
+      ); 
+    },
+    calcularCuadrado2(num1, num2) {
+      console.log("Ingreso al metodo");
+      return num1 * num2;
+    },
+
+    incrementar() {
+      this.numero++;
+      
+    },
+
+    disminuir() {
+      this.numero--;
+    },
+  },
+
+  computed: {
+    calcular() {
+      console.log("Ingreso a la propiedad computada");
+      return this.numero * this.numero;
+    },
+
+    presentar(){
+      if(this.titulo!==undefined){
+        return this.titulo;
+      }else{
+       return  "Texto que quiero";
+      }
+    }
+  },
+};
 </script>
- 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-h3 {
-  margin: 40px 0 0;
+
+<style>
+* {
+  background: #b6dbc2;
 }
-ul {
-  list-style-type: none;
-  padding: 0;
+button {
+  background: rgb(155, 208, 9);
+  border-radius: 5px;
+  border: 1px solid white;
+  color: rgb(255, 255, 255);
+  margin: 5px 5px;
+  padding: 5px 20px;
+  cursor: pointer;
 }
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
+button:hover {
+  background: #5aa67b;
 }
 </style>
- 
