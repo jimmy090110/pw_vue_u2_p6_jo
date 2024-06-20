@@ -4,14 +4,14 @@
     alt="No se pudo"
   />
 
-  <div class="oscuro">
+  <div  class="oscuro">
     <div class="pregunta-container">
       <input v-model="pregunta" type="text" placeholder="Hazme una pregunta" />
       <p>Recuerda terminar la pregunta con el signo de interrogración(?)</p>
 
-      <div class="respuesta">
+      <div v-show="mensaje" class="respuesta">
         <h2>{{ pregunta }}</h2>
-        <h1>{{ respuesta }}</h1>
+        <h1>{{ respuesta==='yes'?'SI!':'NO' }}</h1>
       </div>
     </div>
   </div>
@@ -23,21 +23,26 @@ export default {
     return {
       pregunta: null,
       respuesta: null,
-      img:null
+      img:null,
+      mensaje:true,
+
     };
   },
   watch: {
     pregunta(value, oldValue) {
+      this.mensaje=false;
       console.log({ value, oldValue });
       if (!value.includes("?")) {
         return; //salgo del observador
       }
       //consumir el API para obtener la respuesta
       this.obtenerRespuesta();
+      this.mensaje=true;
     },
   },
   methods: {
     async obtenerRespuesta() {
+      this.respuesta="Pensando......";
       const data = await fetch("https://yesno.wtf/api").then((r) => r.json());
       console.log(data);
       const {answer, forced,image}=data;
@@ -51,9 +56,9 @@ export default {
     const data2= await this.obtenerRespuesta();
   }
 };
-</script>
+</script >
 
-<style>
+<style scoped>
 img,
 .oscuro {
   max-height: 100%;
@@ -90,6 +95,8 @@ h1,
 h2 {
   color: white;
 }
+
+
 
 p {
   font-size: 25px;
