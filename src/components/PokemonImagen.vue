@@ -1,20 +1,30 @@
 <template>
-  <div class="pokemonContainer">
+  <div class="pokemon-container">
+    <img
+      v-show="mostrarPokemon"
+      :src="imagenFuente"
+      alt="No se pudo visualizar la imagen"
+    />
     <img
       v-show="!mostrarPokemon"
-      class="ocultapokemon"
+      class="oculta-pokemon"
       :src="imagenFuente"
-      alt=" No hay Imagen"
+      alt="No se pudo visualizar la imagen"
     />
-    <img v-show="mostrarPokemon" :src="imagenFuente" alt=" No hay Imagen" />
   </div>
 </template>
 
 <script>
 export default {
+  computed: {
+    imagenFuente() {
+      return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${this.idPokemon}.svg`;
+    },
+  },
   data() {
     return {
-      mostrar: false,
+      mostrar: true,
+      urlimagen: "",
     };
   },
   props: {
@@ -25,30 +35,24 @@ export default {
     mostrarPokemon: {
       type: Boolean,
       required: true,
-    },
-  },
-  //la propiedad computad no se va a ejecutar si no cambia el cuerpo
-  //toda propiedad computada debe terner un retunr
-  computed: {
-    imagenFuente() {
-      return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${this.idPokemon}.svg`;
+      default: true,
     },
   },
 };
 </script>
 
 <style scoped>
-.ocultapokemon {
+.oculta-pokemon {
   filter: brightness(0);
 }
+
 img {
   height: 200px;
   width: 200px;
-  position: absolute;
-  right: 45%;
+  position: absolute; 
+  right: 38%;
 }
-
-.pokemonContainer {
+.pokemon-container {
   height: 200px;
 }
 </style>

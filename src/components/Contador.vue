@@ -1,8 +1,6 @@
 <template>
   <h2>{{presentar}}</h2>
-  <!--<p>{{ numero }} <sup>2</sup>={{ calcularCuadrado() }}</p>  LLAMADA A UN METODO-->
   <p>{{ numero }} <sup>2</sup>={{ calcular }}</p>
-  <!--LLAMADA A UNA PROPIEDAD COMPUTADA-->
 
   <div>
     <button v-on:click="incrementar">+1</button>
@@ -12,27 +10,21 @@
 
 <script>
 export default {
-
- // props:["titulo","num"], Froma básica de declarar un props(Básica)
   props:{
     titulo: String,
     num: {
       type:Number,
-     // required:true // esto cuando siempre va a ser requerido
      required: false,
      validator(value){
-      //Toda la programación
-      //return booleano
-      return value>0;
-     }
      
-
-    }
+      return value>0;
+     }  
+    },
     
   },
   data() {
     return {
-      /*prop reactivas*/
+      
       numero: this.num,
 
     };

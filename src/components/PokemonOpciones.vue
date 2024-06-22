@@ -1,8 +1,22 @@
 <template>
-  <div class="opcionesContainer">
+  <div class="opciones-container">
     <ul>
-      <li v-for="pokemon in pokemons" :key="pokemon.id">{{ pokemon.name }}</li>
+      <li
+        v-for="pokemon in pokemons"
+        :key="pokemon.id"
+        @click="
+          $emit('seleccionPokemon', {
+            ident: pokemon.id,
+            nomb: pokemon.nombre,
+            test: 'esto es una prueba',
+            test2:test3,
+          })
+        "
+      >
+        {{ pokemon.nombre }}
+      </li>
     </ul>
+    <!-- order list -->
   </div>
 </template>
 
@@ -14,27 +28,31 @@ export default {
       required: true,
     },
   },
+  data() {
+    return {
+      test3: "segundaprueba",
+    };
+  },
 };
 </script>
 
-<style>
+<style scoped>
+.opciones-container {
+  display: flex;
+  justify-content: center;
+}
 ul {
   list-style-type: none;
 }
 li {
-  display: flex;
-  border: 1px solid black;
+  border: 1px solid rgba(0, 0, 0, 0.5);
   border-radius: 5px;
   margin-bottom: 10px;
-  width: 250px;
+  width: 200px;
   background: white;
   cursor: pointer;
 }
 li:hover {
   background: rgba(0, 0, 0, 0.05);
-}
-.opcionesContainer {
-  display: flex;
-  justify-content: center;
 }
 </style>
